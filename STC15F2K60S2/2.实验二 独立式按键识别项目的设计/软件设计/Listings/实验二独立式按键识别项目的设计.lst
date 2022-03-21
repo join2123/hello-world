@@ -1,0 +1,188 @@
+C51 COMPILER V9.57.0.0   ______________________________                                    11/08/2021 18:13:18 PAGE 1   
+
+
+C51 COMPILER V9.57.0.0, COMPILATION OF MODULE ______________________________
+OBJECT MODULE PLACED IN .\Objects\实验二独立式按键识别项目的设计.obj
+COMPILER INVOKED BY: E:\keil_v5\C51\BIN\C51.EXE 实验二独立式按键识别项目的设计.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEX
+                    -TEND PRINT(.\Listings\实验二独立式按键识别项目的设计.lst) OBJECT(.\Objects\实验二独立式按键识别项目的设计.obj)
+
+line level    source
+
+   1          
+   2          #include"STC15F2K60S2.H"
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          
+   6          uchar count  = 0;       //第二个按键计数
+   7          uchar count1 = 0;  //加减计数
+   8          
+   9          //led定义
+  10          sbit L1=P1^0;//////定义第1个指示灯的名称为L1 
+  11          sbit L2=P1^1;//////定义第2个指示灯的名称为L2 
+  12          sbit L3=P1^2;//////定义第3个指示灯的名称为L3  
+  13          sbit L4=P1^3;//////定义第4个指示灯的名称为L4 
+  14          sbit L5=P1^4;//////定义第5个指示灯的名称为L5  
+  15          sbit L6=P1^5;//////定义第6个指示灯的名称为L6 
+  16          sbit L7=P1^6;//////定义第7个指示灯的名称为L7  
+  17          sbit L8=P1^7;//////定义第8个指示灯的名称为L8 
+  18          
+  19          
+  20          
+  21          //按键定义
+  22          sbit key_1=P3^4;//////定义第1个按键为KEY_1
+  23          sbit key_2=P3^5;//////定义第1个按键为KEY_2
+  24          sbit key_3=P4^2;//////定义第1个按键为KEY_3
+  25          sbit key_4=P4^4;//////定义第1个按键为KEY_4
+  26          
+  27          sbit fmq = P3^2;//蜂鸣器
+  28          
+  29          void key(void);          //按键函数
+  30          void display(void);      //显示函数
+  31          void delay10ms(void);    //延时10ms
+  32          void alarm_buzzer(void); //蜂鸣器电路
+  33          void delay5ms(void);     //延时10ms
+  34          void delay50us(void);    //延时50us
+  35          
+  36          
+  37          
+  38          void main()
+  39          {
+  40   1              P3 = 0xff;                              //初始化P3口准备读取按键（按键输入）
+  41   1              while(1)
+  42   1              {
+  43   2                      key();
+  44   2                      //display();
+  45   2              }
+  46   1      }
+  47          
+  48          ///////////////////////////////////////////////////
+  49          //函数名称:void delay10ms(void)
+  50          //函数功能:延时5/10ms秒的子程序
+  51          //入口参数:
+  52          //出口参数:
+  53          //函数说明:
+  54          ///////////////////////////////////////////////////
+C51 COMPILER V9.57.0.0   ______________________________                                    11/08/2021 18:13:18 PAGE 2   
+
+  55          void delay10ms(void)            //延时10ms的子程序//
+  56          {               
+  57   1                      unsigned char j,k; /////局部变量定义
+  58   1                      for(j=20;j>0;j--)   // 上层循环
+  59   1                      {
+  60   2                              for(k=248;k>0;k--); ////内层循环
+  61   2                      }               
+  62   1      }  
+  63          
+  64          void delay5ms(void)             //延时5ms的子程序//
+  65          {               
+  66   1                      unsigned char j,k; /////局部变量定义
+  67   1                      for(j=10;j>0;j--)   // 上层循环
+  68   1                      {
+  69   2                              for(k=248;k>0;k--); ////内层循环
+  70   2                      }               
+  71   1      }  
+  72          ///////////////////////////////////////////////////
+  73          //函数名称:void key(void)
+  74          //函数功能:按键函数
+  75          //入口参数:
+  76          //出口参数:
+  77          //函数说明:
+  78          ///////////////////////////////////////////////////
+  79          void key(void)      //按键函数
+  80          {
+  81   1              if(key_1==0||key_2==0||key_3==0||key_4==0)/////////如果按键按下
+  82   1              {
+  83   2                delay10ms();///////延时10ms
+  84   2                if(key_1==0||key_2==0||key_3==0||key_4==0)///////按键的确按下
+  85   2                {
+  86   3                        //按1第一个灯亮灭
+  87   3                              if(key_1==0)
+  88   3                              {
+  89   4                                      L1 = ~L1;
+  90   4                                      //alarm_buzzer();
+  91   4                              }
+  92   3                              //二计数并显示bcd
+  93   3                              if(key_2==0)
+  94   3                              {
+  95   4                                      count++;///////按键计数器计数
+  96   4                                      if(count >= 10){count = 0;}//////控制计数器最大值;16即为16进制;20即为20进制;但最大计数255，因为count定
+             -义的是unsigend char
+  97   4                                      P1=~count;                                 ///////将计数值送P0口利用LED指示灯以BCD码（8421码）显示
+  98   4      
+  99   4      
+ 100   4                                      //计数大于5 第八位灯亮（报警）
+ 101   4                                      if(count > 5)
+ 102   4                                      {
+ 103   5                                              L8 = 0;
+ 104   5                                              //fmq=~fmq;
+ 105   5                                              //alarm_buzzer();
+ 106   5                                      }
+ 107   4                              }
+ 108   3                              //3和4实现加减法（改109行count1）
+ 109   3                              if(key_3==0||key_4==0)
+ 110   3                              {       
+ 111   4                                      if(key_3 ==0 )
+ 112   4                                      {
+ 113   5                                              alarm_buzzer();//按键音
+ 114   5                                              count1++;
+ 115   5                                              if(count1 >= 10)
+C51 COMPILER V9.57.0.0   ______________________________                                    11/08/2021 18:13:18 PAGE 3   
+
+ 116   5                                              {
+ 117   6                                                      count1 = 9;                                             
+ 118   6                                              }
+ 119   5                                      }
+ 120   4                                      if(key_4 == 0)
+ 121   4                                      {
+ 122   5                                              alarm_buzzer();
+ 123   5                                              if(count1 > 0)
+ 124   5                                              {
+ 125   6                                                      count1--;
+ 126   6                                              }
+ 127   5                                              else
+ 128   5                                                      count1 = 0;
+ 129   5                                      }
+ 130   4                                      P1=~count1;
+ 131   4                              }       
+ 132   3                      while(key_1==0||key_2==0||key_3==0||key_4==0){;}///////按键等待抬起
+ 133   3                      }       
+ 134   2              }
+ 135   1      }
+ 136          
+ 137          void alarm_buzzer(void)         //蜂鸣器控制（按键音）//
+ 138          {               
+ 139   1              unsigned char k; /////局部变量定义
+ 140   1              for(k=248;k>0;k--) ////内层循环
+ 141   1              {
+ 142   2                      fmq=0;
+ 143   2                      delay50us();
+ 144   2                      fmq=1;
+ 145   2                      delay50us();                    
+ 146   2              }
+ 147   1      }  
+ 148          
+ 149          void delay50us(void)            //延时5s的子程序//
+ 150          {               
+ 151   1              unsigned int k; /////局部变量定义
+ 152   1              for(k=50;k>0;k--); ////内层循环
+ 153   1      }
+ 154          
+ 155          void display(void)         //显示
+ 156          {
+ 157   1              P1 = ~count;
+ 158   1      }
+ 159          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    192    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

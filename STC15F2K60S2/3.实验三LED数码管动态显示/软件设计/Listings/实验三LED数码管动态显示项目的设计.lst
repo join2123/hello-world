@@ -1,0 +1,24 @@
+C51 COMPILER V9.57.0.0   ______LED________________________                                 11/29/2021 18:12:34 PAGE 1   
+
+
+C51 COMPILER V9.57.0.0, COMPILATION OF MODULE ______LED________________________
+OBJECT MODULE PLACED IN .\Objects\实验三LED数码管动态显示项目的设计.obj
+COMPILER INVOKED BY: E:\keil_v5\C51\BIN\C51.EXE 实验三LED数码管动态显示项目的设计.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJEC
+                    -TEXTEND PRINT(.\Listings\实验三LED数码管动态显示项目的设计.lst) OBJECT(.\Objects\实验三LED数码管动态显示项目的设计.obj)
+
+line level    source
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1295    ----
+   CONSTANT SIZE    =     22    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     13      10
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

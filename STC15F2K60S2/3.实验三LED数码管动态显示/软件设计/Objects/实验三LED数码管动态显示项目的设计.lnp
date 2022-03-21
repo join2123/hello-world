@@ -1,0 +1,3 @@
+".\Objects\实验三LED数码管动态显示项目的设计.obj" 
+TO ".\Objects\实验三LED数码管动态显示项目的设计" 
+PRINT(".\Listings\实验三LED数码管动态显示项目的设计.m51") RAMSIZE(256) 

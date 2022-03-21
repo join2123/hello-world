@@ -1,0 +1,3 @@
+".\Objects\实验一_LED-main.obj" 
+TO ".\Objects\实验一 led闪烁" 
+PRINT(".\Listings\实验一 led闪烁.m51") RAMSIZE(256) 

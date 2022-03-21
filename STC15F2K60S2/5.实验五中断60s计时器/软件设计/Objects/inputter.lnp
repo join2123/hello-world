@@ -1,0 +1,3 @@
+".\Objects\main.obj" 
+TO ".\Objects\inputter" 
+PRINT(".\Listings\inputter.m51") RAMSIZE(256) 
